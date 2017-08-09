@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="title" content="bitnan - 利润共享的数字货币交易所">
+    <meta name="description" content="bitnan是基于以太坊去中心化协议的利润共享数字货币交易平台。">
+    <meta name="keywords" content="bitnan,ICO,BRT">
+    <link rel="shortcut icon" href="images/favicon.ico">
+    <title> bitnan - 利润共享的数字货币交易所 </title>
+    <link rel="stylesheet" href="./css/index.css"/>
+    <link rel="stylesheet" href="./css/token.css"/>
+    <script src="./js/jquery.min.js"></script>
+</head>
+<body>
+<div id="main-wrapper">
+    <header>
+        <div class="container">
+            <ul id="tab" class="fl">
+                <li>
+                    <a href="/index.html">首页</a>
+                </li>
+                <li>
+                    <a href="/token.html" class="active">认购</a>
+                    <div class="separator fl"></div>
+                </li>
+                <li>
+                    <a target="_blank" href="/assets/bitnan_whitepaper.pdf">白皮书</a>
+                    <div class="separator fl"></div>
+                </li>
+                <li>
+                    <a href="/faq.html">FAQ</a>
+                    <div class="separator fl"></div>
+                </li>
+            </ul>
+            <img src="images/brt-top-logo.png"/>
+        </div>
+    </header>
+    <section id="token-sale-section">
+        <h3 id="participate-title">如何参与</h3>
+        <p>
+            您可从您的以太坊钱包中直接将ETH转账到我们的BRT智能合约地址，转账方式和普通转账一样，<br>注意需要将gas设为90000（约0.002ETH）。
+        </p>
+        <h4 id="contract-address-title">地址</h4>
+        <div id="contract-address">
+            <span>0x326656615a2751f34cdff5e6b8ac5f64c3a76b36</span>
+        </div>
+        <h4 id="qrcode-title">地址二维码</h4>
+        <img id="address-qrcode" src="images/addr-qrcode.png"/>
+        <h3 id="warning-title">注意</h3>
+        <p>
+            1.请勿从交易所使用提币功能直接提币ETH到智能合约地址，那样您的BRT会被交易所拥有，由于您的提币地址归属于交易所，我们无法为您提供任何支持；<br>
+            2.请您将转账的gas设置为 90000（约0.002ETH，未使用的部分将返回）；<br>
+            3.最少参与的金额为0.01ETH，不包含gas；<br>
+            4.在您转账成功后，BRT将通过智能合约实时发行到您的转账地址；<br>
+            5.我们建议您使用MyEtherWallet参与认购，并提供<a href="assets/myetherwallet_tutorial.pdf">MyEtherWallet认购说明</a>以供参考；<br>
+            6.我们拒绝美国和新加坡的居民和公民参与本次bitnan ICO。如您属于该类人群，请勿参与。
+        </p>
+        <h3 id="balance-query-title">BRT余额查询</h3>
+        <input id="wallet-address-input" type="text" placeholder="请输入您的以太坊地址"/>
+        <input type="button" id="query-btn" value="查询"/>
+        <h3 id="rules-title">规则</h3>
+        <p>
+            1.认购代币为BRT，符合以太坊ERC20规范；BRT的发行仅通过官网开源的智能合约进行发行，无其他发行方式；<br>
+            2.请勿从交易所使用提币功能直接提币ETH到智能合约地址，那样您的BRT会被交易所拥有，由于您的提币地址归属于交易所，您的BRT会丢失，我们不负责也不提供相关技术支持；<br>
+            3.认购价格为1ETH=3000BRT；<br>
+            4.认购分为5个阶段，每个阶段包含30500个区块，约为6个自然日，各阶段之间没有时间间隔；<br>
+            5.各阶段相应的奖励比例为20%，15%，10%，5%，0%，如果您认可该项目，那么越早参与收益越高；<br>
+            6.认购结束后，未售BRT占已发售BRT的50%，将在认购结束后一周内由项目团队调用智能合约特定方法进行发行；<br>
+            7.认购结束后，未售BRT将由项目团队及项目贡献者按照2：3的比例分配，项目团队锁定期4年；<br>
+            8.认购规则以官网开源智能合约代码为最终标准，包括网页在内的其它宣传资料作为参考。<br>
+        </p>
+        <h3 id="contract-code-title">合约代码</h3>
+        <div id="contract-code">
+        <pre>
+            <code>
+/*
+
+  Copyright 2017 Bitnan.
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+  http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+
+*/
+pragma solidity ^0.4.11;
+
+import "./StandardToken.sol";
+
+
+contract BitnanRewardToken is StandardToken {
+    /* constants */
+    string public constant NAME = "BitnanRewardToken";
+    string public constant SYMBOL = "BRT";
+    uint public constant DECIMALS = 18;
+    uint256 public constant ETH_MIN_GOAL = 3000 ether;
+    uint256 public constant ETH_MAX_GOAL = 6000 ether;
+    uint256 public constant ORIGIN_ETH_BRT_RATIO = 3000;
+    uint public constant UNSOLD_SOLD_RATIO = 50;
+    uint public constant PHASE_NUMBER = 5;
+    uint public constant BLOCKS_PER_PHASE = 30500;
+    uint8[5] public bonusPercents = [
+      20,
+      15,
+      10,
+      5,
+      0
+    ];
+
+    /* vars */
+    address public owner;
+    uint public totalEthAmount = 0;
+    uint public tokenIssueIndex = 0;
+    uint public deadline;
+    uint public durationInDays;
+    uint public startBlock = 0;
+    bool public isLeftTokenIssued = false;
+
+
+    /* events */
+    event TokenSaleStart();
+    event TokenSaleEnd();
+    event FakeOwner(address fakeOwner);
+    event CommonError(bytes error);
+    event IssueToken(uint index, address addr, uint ethAmount, uint tokenAmount);
+    event TokenSaleSucceed();
+    event TokenSaleFail();
+    event TokenSendFail(uint ethAmount);
+
+    /* modifier */
+    modifier onlyOwner {
+      if(msg.sender != owner) {
+        FakeOwner(msg.sender);
+        revert();
+      }
+      _;        
+    }
+    modifier beforeSale {
+      if(!saleInProgress()) {
+        _;
+      }
+      else {
+        CommonError('Sale has not started!');
+        revert();
+      }
+    }
+    modifier inSale {
+      if(saleInProgress() && !saleOver()) {
+        _;
+      }
+      else {
+        CommonError('Token is not in sale!');
+        revert();
+      }
+    }
+    modifier afterSale {
+      if(saleOver()) {
+        _;
+      }
+      else {
+        CommonError('Sale is not over!');
+        revert();
+      }
+    }
+    /* functions */
+    function () payable {
+      issueToken(msg.sender);
+    }
+    function issueToken(address recipient) payable inSale {
+      assert(msg.value >= 0.01 ether);
+      uint tokenAmount = generateTokenAmount(msg.value);
+      totalEthAmount = totalEthAmount.add(msg.value);
+      totalSupply = totalSupply.add(tokenAmount);
+      balances[recipient] = balances[recipient].add(tokenAmount);
+      IssueToken(tokenIssueIndex, recipient, msg.value, tokenAmount);
+      if(!owner.send(msg.value)) {
+        TokenSendFail(msg.value);
+        revert();
+      }
+    }
+    function issueLeftToken() internal {
+      if(isLeftTokenIssued) {
+        CommonError("Left tokens has been issued!");
+      }
+      else {
+        require(totalEthAmount >= ETH_MIN_GOAL);
+        uint leftTokenAmount = totalSupply.mul(UNSOLD_SOLD_RATIO).div(100);
+        totalSupply = totalSupply.add(leftTokenAmount);
+        balances[owner] = balances[owner].add(leftTokenAmount);
+        IssueToken(tokenIssueIndex++, owner, 0, leftTokenAmount);
+        isLeftTokenIssued = true;
+      }
+    }
+    function BitnanRewardToken(address _owner) {
+      owner = _owner;
+    }
+    function start(uint _startBlock) public onlyOwner beforeSale {
+      startBlock = _startBlock;
+      TokenSaleStart();
+    }
+    function close() public onlyOwner afterSale {
+      if(totalEthAmount < ETH_MIN_GOAL) {
+        TokenSaleFail();
+      }
+      else {
+        issueLeftToken();
+        TokenSaleSucceed();
+      }
+    }
+    function generateTokenAmount(uint ethAmount) internal constant returns (uint tokenAmount) {
+      uint phase = (block.number - startBlock).div(BLOCKS_PER_PHASE);
+      if(phase >= bonusPercents.length) {
+        phase = bonusPercents.length - 1;
+      }
+      uint originTokenAmount = ethAmount.mul(ORIGIN_ETH_BRT_RATIO);
+      uint bonusTokenAmount = originTokenAmount.mul(bonusPercents[phase]).div(100);
+      tokenAmount = originTokenAmount.add(bonusTokenAmount);
+    }
+    /* constant functions */
+    function saleInProgress() constant returns (bool) {
+      return (startBlock > 0 && block.number >= startBlock);
+    }
+    function saleOver() constant returns (bool) {
+      return startBlock > 0 && (saleOverInTime() || saleOverReachMaxETH());
+    }
+    function saleOverInTime() constant returns (bool) {
+      return block.number >= startBlock + BLOCKS_PER_PHASE * PHASE_NUMBER;
+    }
+    function saleOverReachMaxETH() constant returns (bool) {
+      return totalEthAmount >= ETH_MAX_GOAL;
+    }
+}
+            </code>
+        </pre>
+        </div>
+        <img class="brt-word" src="images/brt-word.png">
+    </section>
+    <section id="social-section">
+        <div class="container">
+            <a target="_blank" href="https://github.com/bitnan-exchange"><img src="images/github-icon.png"></a>
+            <a href="mailto: service@bitnan.com"><img src="images/email-icon.png"></a>
+            <a target="_blank" href="https://www.facebook.com/Bitnan-344536455976889/"><img src="images/facebook-icon.png"></a>
+            <a target="_blank" href="https://twitter.com/Bitnan_Exchange"><img src="images/twitter-icon.png"></a>
+            <a target="_blank" href="https://medium.com/@Bitnan"><img src="images/medium-icon.png"></a>
+        </div>
+    </section>
+    <footer>
+        <div class="container">
+            Copyright©2017 bitnan.com Co.,Ltd.All Rights Reserved.版权所有
+        </div>
+    </footer>
+</div>
+<script>
+    var contractAddr = '0x326656615a2751f34cdff5e6b8ac5f64c3a76b36';
+    $(function() {
+        $('#query-btn').click(function() {
+            var walletAddr = $('#wallet-address-input').val();
+            console.log(walletAddr);
+            if(isAddress(walletAddr)) {
+                var openUrl = 'https://etherscan.io/token/' + contractAddr.toUpperCase() + '?a=' + walletAddr.toUpperCase();
+                console.log(openUrl);
+                location.href = openUrl;
+            }
+            else {
+                alert('请输入有效的ETH地址');
+            }
+
+        })
+    });
+    var isAddress = function (address) {
+        if (!/^(0x)?[0-9a-f]{40}$/i.test(address)) {
+            // check if it has the basic requirements of an address
+            return false;
+        }
+        return true;
+    };
+</script>
+</body>
+</html>

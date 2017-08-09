@@ -1,0 +1,100 @@
+@import "var";
+body {
+  background: $bg-color;
+}
+#participate-title, #rules-title, #contract-code-title {
+  margin-top: 50px;
+  margin-bottom: 20px;
+}
+#contract-address-title, #qrcode-title {
+  margin-top: 30px;
+  margin-bottom: 8px;
+}
+#contract-address {
+  text-align: center;
+  min-width: 490px;
+  span {
+    display: inline-block;
+    min-width: 430px;
+    padding: 10px 30px;
+    background: #dbdbdb;
+    color: $gold-color;
+    border-radius: 4px;
+    font-size: 18px;
+  }
+}
+#address-qrcode {
+  margin: 0 auto;
+  display: block;
+  width: 140px;
+  height: 140px;
+  padding: 8px;
+  border: 1px solid $light-gray-color;
+}
+#warning-title {
+  margin-top: 35px;
+  margin-bottom: 20px;
+}
+#balance-query-title {
+  margin-top: 56px;
+  margin-bottom: 20px;
+}
+#wallet-address-input {
+  padding: 10px 10px;
+  background: #dbdbdb;
+  border-radius: 4px;
+  min-width: 470px;
+  margin: 0 auto;
+  display: block;
+  font-size: 14px;
+}
+#query-btn {
+  display: block;
+  margin: 0 auto;
+  font-size: 18px;
+  color: #ffffff;
+  padding: 4px 30px;
+  border: 1px solid #ffffff;
+  border-radius: 4px;
+  margin-top: 40px;
+  cursor: pointer;
+  &:hover {
+    color: $bg-color;
+    background: #ffffff;
+  }
+}
+#contract-code {
+  text-align: center;
+  pre {
+    text-align: left;
+    display: inline-block;
+    padding: 30px;
+    background: #272e36;
+    color: $light-gray-color;
+    max-height: 740px;
+    overflow-y: scroll;
+    border-radius: 8px;
+    &::-webkit-scrollbar {
+      width: 10px;
+      background: transparent;
+      margin-right: 10px;
+    }
+    &::-webkit-scrollbar-thumb {
+      background: #9d9f9e;
+      border-radius: 5px;
+    }
+  }
+}
+#token-sale-section {
+  h4 {
+    color: $gray-color;
+    font-size: 17px;
+    text-align: center;
+  }
+  .brt-word {
+    width: 79px;
+    height: 23px;
+    display: block;
+    margin: 40px auto;
+  }
+}

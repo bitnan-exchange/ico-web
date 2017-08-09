@@ -1,0 +1,25 @@
+@import "var";
+body {
+  background: $bg-color;
+}
+#faq-section {
+  #faq-icon {
+    display: block;
+    margin: 42px auto 0 auto;
+    width: 59px;
+    height: 67px;
+  }
+  h4 {
+    color: $gray-color;
+    font-size: 17px;
+    text-align: center;
+    margin-top: 25px;
+    margin-bottom: 6px;
+  }
+  .brt-word {
+    width: 79px;
+    height: 23px;
+    display: block;
+    margin: 40px auto;
+  }
+}

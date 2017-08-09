@@ -1,0 +1,21 @@
+body {
+  background: #3a566c; }
+
+#faq-section #faq-icon {
+  display: block;
+  margin: 42px auto 0 auto;
+  width: 59px;
+  height: 67px; }
+
+#faq-section h4 {
+  color: #c9caca;
+  font-size: 17px;
+  text-align: center;
+  margin-top: 25px;
+  margin-bottom: 6px; }
+
+#faq-section .brt-word {
+  width: 79px;
+  height: 23px;
+  display: block;
+  margin: 40px auto; }
