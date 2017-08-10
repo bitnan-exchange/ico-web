@@ -1,0 +1,19 @@
+body {
+  background: #3a566c;
+  color: #ffffff;
+  text-align: center; }
+
+.error-code {
+  font-size: 120px;
+  margin: auto; }
+
+.error-message {
+  font-size: 18px;
+  margin-top: 30px; }
+
+#error-section {
+  height: 100%;
+  margin-top: 100px; }
+
+#main-wrapper {
+  height: 100%; }
