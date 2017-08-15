@@ -298,11 +298,12 @@ header {
       &.user {
         left: 54px;
         ol {
-          padding-left: 50px;
-          padding-top: 44px;
+          padding-left: 30px;
+          padding-top: 20px;
+          width: 340px;
         }
       }
-      &.investor {
+      &.user, &.investor {
         right: 54px;
         ol {
           padding-left: 30px;

@@ -258,11 +258,12 @@ header {
       #bitnan-advantage-section .block-wrapper .block.user {
         left: 54px; }
         #bitnan-advantage-section .block-wrapper .block.user ol {
-          padding-left: 50px;
-          padding-top: 44px; }
-      #bitnan-advantage-section .block-wrapper .block.investor {
+          padding-left: 30px;
+          padding-top: 20px;
+          width: 340px; }
+      #bitnan-advantage-section .block-wrapper .block.user, #bitnan-advantage-section .block-wrapper .block.investor {
         right: 54px; }
-        #bitnan-advantage-section .block-wrapper .block.investor ol {
+        #bitnan-advantage-section .block-wrapper .block.user ol, #bitnan-advantage-section .block-wrapper .block.investor ol {
           padding-left: 30px;
           padding-top: 20px;
           width: 340px; }
