@@ -2,7 +2,7 @@
  * Created by yinyu on 2017/8/6.
  */
 $(function() {
-    var apiHost = 'http://ico.bitnan.com:3030';
+    var apiHost = 'https://ico.bitnan.com/api';
     $.get(apiHost + '/time', function(res) {
         if(res && res.timestamp) {
             $('#count-down-number-wrapper').countdown(new Date(res.timestamp), '2017/09/01', function(event) {
@@ -19,6 +19,9 @@ $(function() {
     });
     $.get(apiHost + '/eth', function(res) {
         if(res && res.eth) {
+            var progress = res.eth / 6000;
+            $('#progress-solid-line').css('width', progress * 100 + '%');
+            $('#progress').text((progress * 100).toFixed(1) + '%').css('left', progress * 338 - 30 + 'px');
             $('#eth-amount').text(res.eth);
         }
     });
@@ -30,9 +33,6 @@ $(function() {
             else {
                 $('#brt-amount').text(res.brt);
             }
-            var progress = res.brt / 22000000;
-            $('#progress-solid-line').css('width', progress * 100 + '%');
-            $('#progress').text((progress * 100).toFixed(1) + '%').css('left', progress * 338 - 30 + 'px');
         }
     })
 });
