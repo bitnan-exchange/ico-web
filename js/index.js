@@ -34,5 +34,16 @@ $(function() {
                 $('#brt-amount').text(res.brt);
             }
         }
-    })
+    });
+    $('#language-en').click(function() {
+        window.location.href = '/en' + window.location.pathname;
+    });
+    $('#language-cn').click(function() {
+        if(window.location.pathname == '/en/') {
+            window.location.href = '/'
+        }
+        else {
+            window.location.href = '/' + window.location.pathname.split('/')[2];
+        }
+    });
 });
